@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HLS | DOCKER & NGINX | Live Stream</title>
+  </head>
+  <body>
+    <h2>Live Stream</h2>
+    <video id="video" width="800" controls></video>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <!-- Or if you want a more recent alpha version -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/hls.js@alpha"></script> -->
+    <script>
+      var video = document.getElementById("video");
+      var videoSrc = "https://ccf3786b925ee51c.mediapackage.us-east-1.amazonaws.com/out/v1/1b4aa5772a3943bc88cecd1f2f35ef4f/index.m3u8";
+      // var videoSrc = "http://44.216.74.109:8989/hls/stream.m3u8";
+      if (Hls.isSupported()) {
+        var hls = new Hls();
+        hls.loadSource(videoSrc);
+        hls.attachMedia(video);
+      }
+      else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+        video.src = videoSrc;
+      }
+    </script>
+  </body>
+  <!-- rtmp://localhost:1919/live
+  stream
+  http://localhost:8989/hls/stream.m3u8 -->
+
+  <!-- rtmp://44.216.74.109:1919/live
+  streamKey
+  http://44.216.74.109:8989/hls/streamKey.m3u8 -->
+</html>

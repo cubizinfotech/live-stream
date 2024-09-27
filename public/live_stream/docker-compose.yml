@@ -1,0 +1,20 @@
+
+version: "3.9"
+services:
+  rtmp:
+    build: ./rtmp
+    ports:
+      - "1919:${RTMP_PORT}"
+      - "8989:${RTMP_HOST_PORT}"
+    container_name: rtmp_server
+    environment:
+      - on_publish=${on_publish}
+      - on_publish_done=${on_publish_done}
+    ## Local Server:
+    volumes:
+      - ./data:/tmp/hls
+      - ./recording:/record
+    ## Live Server:
+    # volumes:
+    #   - /mnt/streaming/data:/tmp/hls
+    #   - /mnt/streaming/recording:/record

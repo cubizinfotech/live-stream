@@ -1,0 +1,10 @@
+
+
+http://localhost/live_stream/public/api/verify/streamDone
+name:stream
+call:publish_done
+
+
+http://localhost/live_stream/public/api/verify/streamKey
+name:stream
+call:publish

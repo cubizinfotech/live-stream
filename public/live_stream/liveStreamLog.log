@@ -1,0 +1,14 @@
+[2024-09-26 14:33:56] Live stream Started ::: {"name":"stream","call":"publish"}
+
+[2024-09-26 14:37:27] Live stream stopped ::: {"name":"stream","call":"publish_done"}
+
+[2024-09-26 14:37:29] recording Response ::: [{"status":true,"insertedID":1,"count_file":1}]
+
+[2024-09-26 14:48:05] Live stream Started ::: {"name":"stream","call":"publish"}
+
+[2024-09-26 14:57:02] Live stream stopped ::: {"name":"stream","call":"publish_done"}
+
+[2024-09-26 14:57:04] recording Response ::: [{"status":true,"insertedID":2,"count_file":5},{"status":true,"insertedID":3,"count_file":5},{"status":true,"insertedID":4,"count_file":5},{"status":true,"insertedID":5,"count_file":5},{"status":true,"insertedID":6,"count_file":5}]
+
+[2024-09-27 16:13:47] Live stream stopped ::: {"name":"stream","call":"publish_done"}
+
