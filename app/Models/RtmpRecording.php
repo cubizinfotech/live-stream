@@ -15,8 +15,12 @@ class RtmpRecording extends Model
     protected $fillable = [
         'rtmp_id',
         'recording_url',
+        'recording_datetime',
+        'recording_path',
         'status',
     ];
+
+    protected $timestamp = false;
 
     public function rtmp()
     {

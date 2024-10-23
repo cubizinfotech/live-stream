@@ -24,7 +24,6 @@ Route::get('/', function () {
 Auth::routes(['verify' => true]);
 
 Route::group(['prefix' => 'admin'], function(){
-    // RTPM Controller
     Route::resource("rtmps", RtpmController::class);
     Route::get('/home', [RtpmController::class, 'home'])->name('admin.home');
     Route::get('/videos/{stream_key}', [RtpmController::class, 'videos'])->name('temple.videos');

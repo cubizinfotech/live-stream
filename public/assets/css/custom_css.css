@@ -17,7 +17,7 @@
 }
 
 .blinking-text {
-    animation: blink 1s infinite;
+    /* animation: blink 1s infinite; */
 }
 
 .overlayText {

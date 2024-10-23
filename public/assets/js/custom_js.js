@@ -27,7 +27,20 @@ $(function () {
     $('[data-toggle="tooltip"]').tooltip()
 });
 
-$(document).ready(function () {
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
 
+$('.cover').on('click', function() {
+    $(this).children().css({
+        'z-index': 1,
+        'opacity': 1
+    });
+    $(this).children().trigger('play');
+});
+
+$(document).ready(function () {
     // 
 });

@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Rtmp;
 use App\Models\RtmpLive;
-use App\Models\CheckRtmpLive;
 use App\Models\CheckCopyright;
 use App\Models\RtmpRecording;
 use Illuminate\Support\Facades\Auth;
@@ -22,10 +21,11 @@ class RtpmController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        date_default_timezone_set(env('TIMEZONE'));
     }
 
-    public function home() {
-
+    public function home() 
+    {
         return view("backend.home");
     }
 
@@ -39,11 +39,11 @@ class RtpmController extends Controller
 
             if(!empty($id)) {
                 $records = Rtmp::where('created_by', $created_by)->where('status', 1)->where('id', $id)->get();
-                return view("backend.ajax_load.temple", compact('records', 'type'));
+                return view("backend.ajax.temple", compact('records', 'type'));
             }
             else {
                 $records = Rtmp::where('created_by', $created_by)->where('status', 1)->orderBy('id', 'DESC')->get();
-                return view("backend.ajax_load.temple", compact('records', 'type'));
+                return view("backend.ajax.temple", compact('records', 'type'));
             }
         }
 
@@ -51,29 +51,31 @@ class RtpmController extends Controller
 
             if(!empty($id)) {
                 $records = RtmpRecording::with('rtmp')->where('status', 1)->where('rtmp_id', $id)->get();
-                return view("backend.ajax_load.temple", compact('records', 'type'));
+                return view("backend.ajax.temple", compact('records', 'type'));
             }
             else {
                 $records = RtmpRecording::with('rtmp')->where('status', 1)->get();
-                return view("backend.ajax_load.temple", compact('records', 'type'));
+                return view("backend.ajax.temple", compact('records', 'type'));
             }
         }
 
         if($request->ajax() && !empty($request->type) && $request->type == "showAllTempleNameRecords") {
 
             $records = Rtmp::where('created_by', $created_by)->where('status', 1)->orderBy('id', 'DESC')->get();
-            return view("backend.ajax_load.temple", compact('records', 'type'));
+            return view("backend.ajax.temple", compact('records', 'type'));
         }
 
         if($request->ajax() && !empty($request->type) && $request->type == "getLiveStreamPageLoad") {
 
             if (!empty($id)) {
-                $records = CheckRtmpLive::with('rtmp')->where('rtmp_id', $id)->where('status', 1)->orderBy('id', 'DESC')->first();
-                return view("backend.ajax_load.temple", compact('records', 'type'));
+                $records = RtmpLive::with('rtmp')->where('rtmp_id', $id)->where('status', 1)->orderBy('id', 'DESC')->first();
+                return view("backend.ajax.temple", compact('records', 'type'));
             }
             else {
-                $records = CheckRtmpLive::with('rtmp')->where('created_by', $created_by)->where('status', 1)->orderBy('id', 'DESC')->first();
-                return view("backend.ajax_load.temple", compact('records', 'type'));
+                $records = RtmpLive::whereHas('rtmp', function($query) use ($created_by) {
+                    $query->where('created_by', $created_by);
+                })->where('status', 1)->orderBy('id', 'DESC')->first();
+                return view("backend.ajax.temple", compact('records', 'type'));
             }
         }
 
@@ -81,11 +83,11 @@ class RtpmController extends Controller
 
             if (!empty($id)) {
                 $records = RtmpRecording::with('rtmp')->where('status', 1)->where('id', $id)->first();
-                return view("backend.ajax_load.temple", compact('records', 'type'));
+                return view("backend.ajax.temple", compact('records', 'type'));
             }
             else {
                 $records = RtmpRecording::with('rtmp')->where('status', 1)->orderBy('id', 'DESC')->first();
-                return view("backend.ajax_load.temple", compact('records', 'type'));
+                return view("backend.ajax.temple", compact('records', 'type'));
             }
         }
 
@@ -99,7 +101,7 @@ class RtpmController extends Controller
         date_default_timezone_set($timezone);
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required|unique:rtmps|max:191',
+            'name' => 'required|unique:rtmps,name|max:191',
         ]);
         if ($validator->fails()) {
             return response()->json([
@@ -180,7 +182,7 @@ class RtpmController extends Controller
 
         Rtmp::where('id', $id)->delete();
         RtmpLive::where('rtmp_id', $id)->delete();
-        CheckRtmpLive::where('rtmp_id', $id)->delete();
+        RtmpLive::where('rtmp_id', $id)->delete();
         CheckCopyright::where('rtmp_id', $id)->delete();
         RtmpRecording::where('rtmp_id', $id)->delete();
 

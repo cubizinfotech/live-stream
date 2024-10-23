@@ -4,19 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Rtmp;
 
-class RtmpLive extends Model
+class RtmpBlocked extends Model
 {
     use HasFactory;
 
-    protected $table = "rtmp_lives";
+    protected $table = "rtmp_recordings";
 
     protected $fillable = [
         'rtmp_id',
-        'ip_address',
-        'timezone',
-        'datetime',
+        'blocked_datetime',
         'status',
     ];
 

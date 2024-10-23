@@ -21,15 +21,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::group(['prefix' => 'verify'], function () {
-    Route::post('streamKey', [ApiController::class, 'verify_streamKey'])->name('verify.streamKey');
-    Route::post('streamDone', [ApiController::class, 'verify_streamDone'])->name('verify.streamDone');
-});
+Route::group(['prefix' => 'stream'], function () {
+    Route::post('start', [ApiController::class, 'streamStart']);
+    Route::post('stop', [ApiController::class, 'streamStop']);
+    Route::post('record', [ApiController::class, 'streamRecord']);
+    Route::post('blocked', [ApiController::class, 'streamBlocked']);
 
-Route::group(['prefix' => 'check'], function () {
-    Route::post('/copyright', [ApiController::class, 'copyright'])->name('live_stream.copyright');
-});
-
-Route::group(['prefix' => 'share'], function () {
-    Route::get('/{type}/{id}', [ApiController::class, 'share_stream'])->name('stream.share');
+    Route::get('live/{id}', [ApiController::class, 'shareLive'])->name('live.share');
+    Route::get('record/{id}', [ApiController::class, 'shareRecord'])->name('record.share');
+    Route::get('filter/s3', [ApiController::class, 'streamS3Bucket']);
 });

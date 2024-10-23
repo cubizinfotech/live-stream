@@ -19,8 +19,8 @@ class UserTable extends Seeder
         DB::table('users')->insert([
             [
                 'name' => 'Gopal Hingu', 
-                'email' => 'gopalhingu123@gmail.com', 
-                'password' => Hash::make('Hingu@1234567'),
+                'email' => 'gopalhingu123@yopmail.com', 
+                'password' => Hash::make('Gopal@123'),
                 'email_verified_at' => Carbon::now(),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),

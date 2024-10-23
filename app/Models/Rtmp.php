@@ -23,10 +23,7 @@ class Rtmp extends Model
         'status',
     ];
 
-    public function check_rtmp_live()
-    {
-    	return $this->hasOne(CheckRtmpLive::class, 'rtmp_id', 'id');
-    }
+    protected $timestamp = false;
 
     public function rtmp_recording()
     {
@@ -35,6 +32,6 @@ class Rtmp extends Model
 
     public function rtmp_live()
     {
-    	return $this->hasMany(RtmpLive::class, 'rtmp_id', 'id');
+    	return $this->hasOne(RtmpLive::class, 'rtmp_id', 'id');
     }
 }

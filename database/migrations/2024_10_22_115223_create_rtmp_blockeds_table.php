@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRtmpTable extends Migration
+class CreateRtmpBlockedsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,10 @@ class CreateRtmpTable extends Migration
      */
     public function up()
     {
-        Schema::create('rtmps', function (Blueprint $table) {
+        Schema::create('rtmp_blockeds', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('created_by');
-            $table->string('name');
-            $table->string('rtmp_url');
-            $table->string('stream_key');
-            $table->string('live_url');
+            $table->unsignedBigInteger('rtmp_id');
+            $table->dateTime('blocked_datetime');
             $table->tinyInteger('status')->dafault(1)->comment('1->Active, 0->Inactive');
             $table->timestamps();
         });
@@ -32,6 +29,6 @@ class CreateRtmpTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rtmps');
+        Schema::dropIfExists('rtmp_blockeds');
     }
 }
